@@ -1,9 +1,5 @@
-import { Content } from "./components/Content";
-import { Sidebar } from "./components/Sidebar";
 import { Routes, Route } from "react-router-dom";
 import { Dashboard } from "./_root/pages/Dashboard";
-import { Settings } from "./_root/pages/Settings";
-import { AllActivity } from "./_root/pages/AllActivity";
 import { Login } from "./_auth/pages/Login";
 import { AuthLayout } from "./_auth/AuthLayout";
 import { Signup } from "./_auth/pages/Signup";
