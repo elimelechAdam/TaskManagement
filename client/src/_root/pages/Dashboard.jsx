@@ -3,6 +3,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { BellIcon } from "@heroicons/react/24/outline";
 import { TasksAmountChart } from "../../components/TasksAmountChart";
 import { RecentActivityCard } from "../../components/RecentActivityCard";
+import useAuthStore from "../../lib/store/authStore";
 
 // Things to do:
 // Data Summary Cards: At the top of the content area, it would be helpful to have small cards or widgets that summarize key data points,
@@ -31,8 +32,9 @@ import { RecentActivityCard } from "../../components/RecentActivityCard";
 //  to complete tasks.
 
 export const Dashboard = () => {
-  const profileImage =
-    "https://media.licdn.com/dms/image/C4D03AQF2zq9RlLxcwA/profile-displayphoto-shrink_800_800/0/1646957042981?e=1718236800&v=beta&t=bYuYYM4MRrFUsJKPjBrtEjDaCKlsVZg7mUxcQE3ob1Q";
+  const { userData, token } = useAuthStore();
+  const { profileImage, email, name, tasks } = userData;
+  ("https://media.licdn.com/dms/image/C4D03AQF2zq9RlLxcwA/profile-displayphoto-shrink_800_800/0/1646957042981?e=1718236800&v=beta&t=bYuYYM4MRrFUsJKPjBrtEjDaCKlsVZg7mUxcQE3ob1Q");
   return (
     <>
       <div className="flex justify-between items-center ml-5 p-2">

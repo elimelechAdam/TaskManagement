@@ -11,45 +11,49 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    console.log("login backend data - ", email, password);
-
     if (!email || !password) {
       return res.status(400).send("Email and password are required.");
     }
 
-    // Find user by email
     const user = await User.findOne({ email });
+
     if (!user) return res.status(401).send("User not found.");
-    // If user/password is invalid, return an error
-    if (!user || (await bcrypt.compare(password, user.password))) {
-      return res.status(401).send("Invalid email or password.");
-    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log(isMatch);
+
+    if (!isMatch)
+      return res.status(401).send("Please check your username or password.");
+
     // Generate JWT
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY, {
       expiresIn: "1h",
     });
 
     // Send response
-    res.status(200).send({
+    res.status(200).json({
       message: "Login successful",
       token,
-
       _id: user._id,
       email: user.email,
       name: user.name,
+      profileImage: user.profileImage,
+
       tasks: user.tasks,
     });
   } catch (error) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(error.message);
   }
 });
 
 // Signup
 router.post("/signup", async (req, res) => {
   try {
-    const { username, email, password, fullname } = req.body;
+    const { name, email, password } = req.body;
+    console.log("signup backend data - ", name, email, password);
+
     // Check username field
-    if (!username) return res.status(400).send("Username is required.");
+    if (!name) return res.status(400).send("Name is required.");
 
     // Check if email is valid
     if (!email || !isValidEmail(email))
@@ -58,22 +62,29 @@ router.post("/signup", async (req, res) => {
     // Check password field
     if (!password) return res.status(400).send("Password is required.");
 
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).send("User already exists.");
+
     // Hash Password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    console.log("hashedPassword", hashedPassword);
+    // Create a new user
     const userData = new User({
-      username,
+      name,
       email,
       password: hashedPassword,
-      fullname,
     });
-    userData.save();
 
-    return res
-      .status(200)
-      .json({ message: "Signup successful", username, email, hashedPassword });
+    // Save the new user to the database
+    await userData.save();
+
+    // Send success response
+    return res.status(200).json({ message: "Signup successful", name, email });
   } catch (error) {
-    console.log(error);
+    console.error("Signup error: ", error.message);
+    return res.status(500).send("Internal Server Error");
   }
 });
 

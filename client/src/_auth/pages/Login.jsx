@@ -1,19 +1,28 @@
-import { Card, Input, Button, Typography } from "@material-tailwind/react";
+import {
+  Card,
+  Input,
+  Button,
+  Typography,
+  Alert,
+} from "@material-tailwind/react";
 import { useLoginUserQuery } from "../../lib/query/query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoginUserMutation } from "../../lib/query/mutations";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export function Login() {
   // getLoginQuery
 
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
+  const navigate = useNavigate();
 
   const {
     mutate: loginUser,
     isError,
     error,
-    isLoading,
+    isSuccess,
   } = useLoginUserMutation();
 
   const handleLogin = (e) => {
@@ -24,7 +33,18 @@ export function Login() {
       password: passwordState,
     });
   };
-
+  console.log(isSuccess);
+  useEffect(() => {
+    if (isError && error) {
+      toast.error(String(error)); // Assuming `error` is not null or undefined
+    }
+  }, [isError, error]); // Only re-run if `isError` or `error` changes
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(String("Welcome")); // Assuming `error` is not null or undefined
+      navigate("/dashboard");
+    }
+  }, [isSuccess]);
   return (
     <Card color="transparent" shadow={false}>
       <Typography variant="h4" color="blue-gray" className="self-center">
@@ -67,22 +87,16 @@ export function Login() {
             }}
           />
         </div>
-        {isError && (
-          <Typography color="red">
-            Error: {error?.message || "Unknown error"}
-          </Typography>
-        )}
 
         <Button type="submit" className="mt-6" fullWidth>
           login
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
           No account?{" "}
-          <a href="#" className="font-medium text-gray-900">
-            Sign up
-          </a>
+          <Button onClick={(e) => navigate("/signup")}>Signup</Button>
         </Typography>
       </form>
+      {/* {isError && toast.error("My error toast")} */}
     </Card>
   );
 }

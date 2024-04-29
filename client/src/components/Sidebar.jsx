@@ -51,13 +51,12 @@ export function Sidebar() {
             Settings
           </ListItem>
         </Link>
-
         <Link to="/activity">
           <ListItem>
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5" />
             </ListItemPrefix>
-            All Activity
+            Logout
           </ListItem>
         </Link>
         <hr className="my-2 border-blue-gray-50" />
