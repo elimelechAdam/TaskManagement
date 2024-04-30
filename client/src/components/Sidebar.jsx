@@ -19,12 +19,16 @@ import {
 
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import useAuthStore from "../lib/store/authStore";
 
 export function Sidebar() {
   const [open, setOpen] = React.useState(0);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
+  };
+  const userLogout = () => {
+    useAuthStore.getState().clearAuth();
   };
 
   return (
@@ -51,8 +55,8 @@ export function Sidebar() {
             Settings
           </ListItem>
         </Link>
-        <Link to="/activity">
-          <ListItem>
+        <Link to="/">
+          <ListItem onClick={userLogout}>
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5" />
             </ListItemPrefix>

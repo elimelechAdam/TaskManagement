@@ -8,7 +8,6 @@ export const useLoginUserMutation = () => {
     onSuccess: (data) => {
       console.log(data);
       useAuthStore.getState().setAuth(data, data.token);
-      localStorage.setItem("token", data.token);
       return data.message;
     },
     onError: (error) => {

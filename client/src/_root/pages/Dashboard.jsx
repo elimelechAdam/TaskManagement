@@ -4,6 +4,7 @@ import { BellIcon } from "@heroicons/react/24/outline";
 import { TasksAmountChart } from "../../components/TasksAmountChart";
 import { RecentActivityCard } from "../../components/RecentActivityCard";
 import useAuthStore from "../../lib/store/authStore";
+import Search from "../../components/Search";
 
 // Things to do:
 // Data Summary Cards: At the top of the content area, it would be helpful to have small cards or widgets that summarize key data points,
@@ -44,7 +45,8 @@ export const Dashboard = () => {
         <div className="">
           {/* Add 3 icons - search, notification and Profile icon */}
           <div className="flex items-center space-x-4">
-            <MagnifyingGlassIcon className="h-9 w-9 p-2 bg-gray-300 rounded-full cursor-pointer" />
+            <Search />
+            {/* <MagnifyingGlassIcon className="h-9 w-9 p-2 bg-gray-300 rounded-full cursor-pointer" /> */}
             <BellIcon className="h-9 w-9 p-2 bg-gray-300 rounded-full cursor-pointer" />
             <img
               src={profileImage}
@@ -55,7 +57,7 @@ export const Dashboard = () => {
         </div>
       </div>
       <div className="w-full p-2 flex items-center m-auto  mt-5 cursor-pointer gap-2">
-        <div className="  p-2">
+        <div className="p-2">
           <TasksAmountChart />
         </div>
         <div>

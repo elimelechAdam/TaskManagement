@@ -14,6 +14,9 @@ router.post("/login", async (req, res) => {
     if (!email || !password) {
       return res.status(400).send("Email and password are required.");
     }
+    if (!isValidEmail(email)) {
+      return res.status(400).send("Valid email is required.");
+    }
 
     const user = await User.findOne({ email });
 
@@ -38,7 +41,6 @@ router.post("/login", async (req, res) => {
       email: user.email,
       name: user.name,
       profileImage: user.profileImage,
-
       tasks: user.tasks,
     });
   } catch (error) {
