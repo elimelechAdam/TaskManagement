@@ -7,39 +7,28 @@
   "sessions": {
     "default": [
       {
-        "name": "hello",
-        "autoExecuteCommands": true,
-        "icon": "person",
-        "color": "terminal.ansiGreen",
+        "name": "React",
         "commands": [
-          "echo hello"
+          "npm run dev"
+        ]
+      },
+      {
+        "name": "NodeJS",
+        "commands": [
+          "nodemon app.js"
         ]
       },
       [
         {
-          "name": "docker:ros",
+          "name": "React",
           "commands": [
-            ""
+            "npm run dev"
           ]
         },
         {
-          "name": "docker:k8s",
+          "name": "NodeJS",
           "commands": [
-            ""
-          ]
-        }
-      ],
-      [
-        {
-          "name": "docker:nats",
-          "commands": [
-            ""
-          ]
-        },
-        {
-          "name": "docker:fleet",
-          "commands": [
-            ""
+            "nodemon app.js"
           ]
         }
       ]
