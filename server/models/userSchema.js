@@ -15,6 +15,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  bio: String,
+  status: { type: String, enum: ["Active", "Inactive"], default: "Active" },
+
+  lastLogin: Date,
+
   profileImage: {
     type: String,
     default: "https://via.placeholder.com/150",

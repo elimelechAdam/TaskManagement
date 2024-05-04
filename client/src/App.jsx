@@ -6,6 +6,7 @@ import { Signup } from "./_auth/pages/Signup";
 import { RootLayout } from "./_root/RootLayout";
 import { Toaster, toast } from "sonner";
 import { ProfileSettings } from "./_auth/pages/ProfileSettings";
+import { Content } from "./components/Content";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route element={<RootLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/settings" element={<ProfileSettings />} />
+            <Route path="/content" element={<Content />} />
           </Route>
         </Routes>
       </div>

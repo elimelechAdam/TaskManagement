@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { authenticateJWT, checkUserOwnership } = require("./middleware/token");
 const authRoute = require("./routes/authRouter");
+const taskRoute = require("./routes/taskRouter");
 // const userRoute = require("./Routes/userRouter");
 // const postRouter = require("./Routes/postRouter");
 
@@ -14,6 +15,7 @@ app.use(cors());
 // console.log(authenticateJWT);
 
 app.use("/auth", authRoute);
+app.use("/task", taskRoute);
 // app.use("/users", authenticateJWT, userRoute);
 // app.use("/posts", postRouter);
 

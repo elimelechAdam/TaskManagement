@@ -5,6 +5,7 @@ import { TasksAmountChart } from "../../components/TasksAmountChart";
 import { RecentActivityCard } from "../../components/RecentActivityCard";
 import useAuthStore from "../../lib/store/authStore";
 import Search from "../../components/Search";
+import { Content } from "../../components/Content";
 
 // Things to do:
 // Data Summary Cards: At the top of the content area, it would be helpful to have small cards or widgets that summarize key data points,
@@ -56,8 +57,11 @@ export const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="w-full p-2 flex items-center m-auto  mt-5 cursor-pointer gap-2">
+      <div className="w-full p-2 flex flex-col md:flex-row items-center m-auto mt-5 gap-2">
         <div className="p-2">
+          <Content />
+        </div>
+        <div>
           <TasksAmountChart />
         </div>
         <div>
