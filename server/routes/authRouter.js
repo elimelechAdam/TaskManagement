@@ -40,7 +40,11 @@ router.post("/login", async (req, res) => {
       _id: user._id,
       email: user.email,
       name: user.name,
+      bio: user.bio,
+      status: user.status,
+      lastLogin: user.lastLogin,
       profileImage: user.profileImage,
+      projects: user.projects,
       tasks: user.tasks,
     });
   } catch (error) {
@@ -77,6 +81,7 @@ router.post("/signup", async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      lastLogin: new Date(),
     });
 
     // Save the new user to the database

@@ -17,13 +17,17 @@ const userSchema = new Schema({
   },
   bio: String,
   status: { type: String, enum: ["Active", "Inactive"], default: "Active" },
-
   lastLogin: Date,
-
   profileImage: {
     type: String,
     default: "https://via.placeholder.com/150",
   },
+  projects: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+    },
+  ],
   tasks: [
     {
       type: Schema.Types.ObjectId,

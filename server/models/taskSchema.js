@@ -6,7 +6,7 @@ const taskSchema = new Schema({
   description: String,
   status: {
     type: String,
-    enum: ["pending", "in progress", "completed"],
+    enum: ["pending", "hold", "in progress", "completed"],
     default: "pending",
   },
   priority: {
@@ -18,7 +18,7 @@ const taskSchema = new Schema({
   assignedTo: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   dueDate: Date,
   labels: [{ type: String }],
-  subtasks: [{ title: String, isCompleted: Boolean }],
+  subItems: [{ type: mongoose.Schema.Types.ObjectId, ref: "SubItem" }],
   progress: { type: Number, min: 0, max: 100, default: 0 },
 });
 

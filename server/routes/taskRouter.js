@@ -4,13 +4,21 @@ const router = express.Router();
 
 router.post("/add", async (req, res) => {
   try {
-    const { title, description, dueDate, status, assignedTo } = req.body;
+    const {
+      title,
+      description,
+      projectId,
+      dueDate,
+      labels,
+      subtasks,
+      progress,
+      status,
+      assignedTo,
+    } = req.body;
 
-    //validation
-    if (!title || !status || !assignedTo) {
-      return res
-        .status(400)
-        .send("Title, status, and assignedTo are required.");
+    //validation for required fields
+    if (!title || !projectId || !dueDate || !assignedTo) {
+      return res.status(400).send("All fields are required.");
     }
 
     const task = new Task({

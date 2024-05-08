@@ -6,8 +6,8 @@ const activityLogSchema = new Schema({
   performedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   datePerformed: { type: Date, default: Date.now },
   details: String,
-  task: { type: mongoose.Schema.Types.ObjectId, ref: "Task" },
-  project: { type: mongoose.Schema.Types.ObjectId, ref: "Project" },
+  referencedItem: { type: mongoose.Schema.Types.ObjectId, refPath: "onModel" },
+  onModel: { type: String, enum: ["Task", "SubItem"], required: true },
 });
 
 const ActivityLog = mongoose.model("ActivityLog", activityLogSchema);

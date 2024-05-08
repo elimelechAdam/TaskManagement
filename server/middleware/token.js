@@ -18,6 +18,8 @@ const authenticateJWT = (req, res, next) => {
 
 const checkUserOwnership = (req, res, next) => {
   const userId = req.params.userId;
+  console.log("req.user._id:  ", req.user._id);
+  console.log("req.params.userId", userId);
   if (req.user._id !== userId) {
     return res
       .status(403)
