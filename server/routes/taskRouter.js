@@ -1,5 +1,6 @@
 const express = require("express");
 const Task = require("../models/taskSchema");
+const Project = require("../models/projectSchema");
 const router = express.Router();
 
 router.post("/add", async (req, res) => {
@@ -7,19 +8,24 @@ router.post("/add", async (req, res) => {
     const {
       title,
       description,
+      status,
+      priority,
       projectId,
+      assignedTo,
       dueDate,
       labels,
-      subtasks,
+      subItems,
       progress,
-      status,
-      assignedTo,
     } = req.body;
 
     //validation for required fields
-    if (!title || !projectId || !dueDate || !assignedTo) {
+    if (!title || !projectId || !dueDate) {
       return res.status(400).send("All fields are required.");
     }
+
+    //check if project exists
+    const project = await Project.findById(projectId);
+    if (!project) return res.status(404).send("Project not found.");
 
     const task = new Task({
       title,

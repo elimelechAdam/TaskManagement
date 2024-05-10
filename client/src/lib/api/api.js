@@ -29,3 +29,61 @@ export const registerUser = async ({ email, name, password }) => {
     throw error.response.data;
   }
 };
+
+export const createProject = async ({
+  name,
+  description,
+  admin,
+  coAdmin,
+  members,
+}) => {
+  console.log("createProjectAPI", name, description, admin, coAdmin, members);
+  try {
+    const response = await axios.post("http://localhost:9000/project/add", {
+      name,
+      description,
+      admin,
+      coAdmin,
+      members,
+    });
+    console.log("response.data", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("createProjectAPI error", error);
+    throw error.response.data;
+  }
+};
+export const addMember = async ({ projectId, member }) => {
+  console.log("addMemberAPI", projectId, member);
+  try {
+    const response = await axios.post(
+      "http://localhost:9000/project/addmember",
+      {
+        projectId,
+        member,
+      }
+    );
+    console.log("response.data", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("addMemberAPI error", error);
+    throw error.response.data;
+  }
+};
+export const addCoAdmin = async ({ projectId, coAdmin }) => {
+  console.log("addCoAdminAPI", projectId, coAdmin);
+  try {
+    const response = await axios.post(
+      "http://localhost:9000/project/addcoadmin",
+      {
+        projectId,
+        coAdmin,
+      }
+    );
+    console.log("response.data", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("addCoAdminAPI error", error);
+    throw error.response.data;
+  }
+};

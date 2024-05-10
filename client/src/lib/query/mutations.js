@@ -1,5 +1,5 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { loginUser, registerUser } from "../api/api";
+import { createProject, loginUser, registerUser } from "../api/api";
 import useAuthStore from "../store/authStore";
 
 export const useLoginUserMutation = () => {
@@ -19,6 +19,44 @@ export const useRegisterUserMutation = () => {
   return useMutation({
     mutationFn: ({ email, name, password }) =>
       registerUser({ email, name, password }),
+    onSuccess: (data) => {
+      console.log("data", data);
+    },
+    onError: (error) => {
+      console.log("onError", error.response.data);
+      return error.response;
+    },
+  });
+};
+
+export const useCreateProjectMutation = () => {
+  return useMutation({
+    mutationFn: ({ name, description, admin, coAdmin, members }) =>
+      createProject({ name, description, admin, coAdmin, members }),
+    onSuccess: (data) => {
+      console.log("data", data);
+    },
+    onError: (error) => {
+      console.log("onError", error.response.data);
+      return error.response;
+    },
+  });
+};
+export const useAddMemberMutation = () => {
+  return useMutation({
+    mutationFn: ({ projectId, member }) => addMember({ projectId, member }),
+    onSuccess: (data) => {
+      console.log("data", data);
+    },
+    onError: (error) => {
+      console.log("onError", error.response.data);
+      return error.response;
+    },
+  });
+};
+export const useAddCoAdminMutation = () => {
+  return useMutation({
+    mutationFn: ({ projectId, coAdmin }) => addCoAdmin({ projectId, coAdmin }),
     onSuccess: (data) => {
       console.log("data", data);
     },
