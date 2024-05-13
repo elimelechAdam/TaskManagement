@@ -32,19 +32,17 @@ export const registerUser = async ({ email, name, password }) => {
 
 export const createProject = async ({
   name,
+  _id,
   description,
-  admin,
-  coAdmin,
-  members,
+  membersData,
 }) => {
-  console.log("createProjectAPI", name, description, admin, coAdmin, members);
+  console.log("createProjectAPI", name, _id, description, membersData);
   try {
     const response = await axios.post("http://localhost:9000/project/add", {
       name,
+      _id,
       description,
-      admin,
-      coAdmin,
-      members,
+      membersData,
     });
     console.log("response.data", response.data);
     return response.data;

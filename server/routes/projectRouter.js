@@ -4,25 +4,38 @@ const User = require("../models/userSchema");
 const router = express.Router();
 
 router.post("/add", async (req, res) => {
-  const { name, description, admin, coAdmin, members } = req.body;
+  const { name, _id, description, membersData } = req.body;
 
   // Validation for required fields
-  if (!name || !admin) {
-    return res.status(400).send("Name and Admin are required.");
+  if (!name) {
+    return res.status(400).send("name is required.");
   }
+
+  const admin = membersData
+    .filter((member) => member.type === "admin")
+    .map((member) => member.email);
+  const coAdmin = membersData
+    .filter((member) => member.type === "coAdmin")
+    .map((member) => member.email);
+  const members = membersData
+    .filter((member) => member.type === "member")
+    .map((member) => member.email);
+
+  admin.push(_id);
 
   const project = new Project({
     name,
     description,
-    admin,
+    admin: admin,
     coAdmin,
     members,
   });
 
   try {
     await project.save();
-    console.log(project._id);
-    res.status(201).send("Project added successfully.");
+    res
+      .status(201)
+      .send({ msg: "Project created successfully.", project: project });
   } catch (error) {
     res.status(400).send(error.message);
   }

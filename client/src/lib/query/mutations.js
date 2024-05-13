@@ -31,8 +31,15 @@ export const useRegisterUserMutation = () => {
 
 export const useCreateProjectMutation = () => {
   return useMutation({
-    mutationFn: ({ name, description, admin, coAdmin, members }) =>
-      createProject({ name, description, admin, coAdmin, members }),
+    mutationFn: ({ name, _id, description, membersData }) => {
+      console.log("membersData insde useCreateProjectMutation", {
+        name,
+        _id,
+        description,
+        membersData,
+      });
+      createProject({ name, _id, description, membersData });
+    },
     onSuccess: (data) => {
       console.log("data", data);
     },
