@@ -11,10 +11,10 @@ import {
 } from "@material-tailwind/react";
 import { useCreateProjectMutation } from "../../lib/query/mutations";
 import useAuthStore from "../../lib/store/authStore";
+import { RiDeleteBin2Fill } from "react-icons/ri";
 
 export const Dialoger = ({ open, handleOpen }) => {
   const { userData } = useAuthStore();
-  console.log(userData);
   const [memberInput, setMemberInput] = useState("");
   const [projectData, setProjectData] = useState({
     projectName: "",
@@ -45,6 +45,8 @@ export const Dialoger = ({ open, handleOpen }) => {
       description: projectData.description,
       membersData: projectData.membersData,
     });
+    handleOpen(!open);
+    setProjectData({ projectName: "", description: "", membersData: [] });
   };
 
   const handleMemberInput = (e) => {
@@ -147,7 +149,7 @@ export const Dialoger = ({ open, handleOpen }) => {
                       onClick={() => handleRemoveMember(index)}
                       className="text-red-500"
                     >
-                      X
+                      <RiDeleteBin2Fill size={"22px"} />
                     </button>
                   </div>
                 ))}

@@ -8,30 +8,57 @@ router.post("/add", async (req, res) => {
 
   // Validation for required fields
   if (!name) {
-    return res.status(400).send("name is required.");
+    return res.status(400).send("Name is required.");
   }
 
-  const admin = membersData
-    .filter((member) => member.type === "admin")
-    .map((member) => member.email);
-  const coAdmin = membersData
-    .filter((member) => member.type === "coAdmin")
-    .map((member) => member.email);
-  const members = membersData
-    .filter((member) => member.type === "member")
-    .map((member) => member.email);
-
-  admin.push(_id);
-
-  const project = new Project({
-    name,
-    description,
-    admin: admin,
-    coAdmin,
-    members,
-  });
+  const memberEmails = membersData.map((member) => member.email);
 
   try {
+    // Check if all members' emails exist and get their _id
+    const existingUsers = await User.find(
+      { email: { $in: memberEmails } },
+      "_id email"
+    );
+    const emailToIdMap = existingUsers.reduce((map, user) => {
+      map[user.email] = user._id.toString();
+      return map;
+    }, {});
+
+    console.log("existingUsers", existingUsers);
+    console.log("emailToIdMap", emailToIdMap);
+
+    const missingEmails = memberEmails.filter((email) => !emailToIdMap[email]);
+
+    if (missingEmails.length > 0) {
+      return res
+        .status(404)
+        .send(
+          `The following emails were not found: ${missingEmails.join(", ")}`
+        );
+    }
+
+    const admin = membersData
+      .filter((member) => member.type === "admin")
+      .map((member) => emailToIdMap[member.email]);
+    const coAdmin = membersData
+      .filter((member) => member.type === "coAdmin")
+      .map((member) => emailToIdMap[member.email]);
+    const members = membersData
+      .filter((member) => member.type === "member")
+      .map((member) => emailToIdMap[member.email]);
+
+    console.log(admin, coAdmin, members);
+
+    admin.push(_id);
+
+    const project = new Project({
+      name,
+      description,
+      admin,
+      coAdmin,
+      members,
+    });
+
     await project.save();
     res
       .status(201)
@@ -40,6 +67,7 @@ router.post("/add", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
+
 router.post("/addmember", async (req, res) => {
   const { projectId, member } = req.body;
 
