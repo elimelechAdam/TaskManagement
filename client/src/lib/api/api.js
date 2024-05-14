@@ -51,6 +51,17 @@ export const createProject = async ({
     throw error.response.data;
   }
 };
+export const getProjects = async () => {
+  console.log("getProjectsAPI");
+  try {
+    const response = await axios.get("http://localhost:9000/project/all");
+    console.log("response.data", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("getProjectsAPI error", error);
+    throw error.response.data;
+  }
+};
 export const addMember = async ({ projectId, member }) => {
   console.log("addMemberAPI", projectId, member);
   try {
