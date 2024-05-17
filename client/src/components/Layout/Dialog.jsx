@@ -29,24 +29,18 @@ export const Dialoger = ({ open, handleOpen }) => {
     isSuccess,
   } = useCreateProjectMutation();
 
-  if (isError) {
-    console.log("error", error);
-  }
-  if (isSuccess) {
-    console.log("success");
-  }
-
   const handleCreateProject = (e) => {
     e.preventDefault();
-    console.log("Final project data before mutation:", projectData);
     createProject({
       name: projectData.projectName,
       _id: userData._id,
       description: projectData.description,
       membersData: projectData.membersData,
     });
-    handleOpen(!open);
-    setProjectData({ projectName: "", description: "", membersData: [] });
+    if (!isError) {
+      handleOpen();
+      setProjectData({ projectName: "", description: "", membersData: [] });
+    }
   };
 
   const handleMemberInput = (e) => {
@@ -70,6 +64,7 @@ export const Dialoger = ({ open, handleOpen }) => {
     );
     setProjectData({ ...projectData, membersData: updatedMembers });
   };
+
   const handleRemoveMember = (index) => {
     const newMembersData = [...projectData.membersData];
     newMembersData.splice(index, 1);
@@ -78,6 +73,7 @@ export const Dialoger = ({ open, handleOpen }) => {
       membersData: newMembersData,
     });
   };
+
   return (
     <Dialog
       open={open}
@@ -120,7 +116,7 @@ export const Dialoger = ({ open, handleOpen }) => {
                   label="Members"
                   value={memberInput}
                   onChange={(e) => setMemberInput(e.target.value)}
-                  onKeyPress={handleMemberInput}
+                  onKeyDown={handleMemberInput}
                   className="flex-1"
                 />
               </div>
@@ -139,13 +135,14 @@ export const Dialoger = ({ open, handleOpen }) => {
                     <Select
                       label="Type"
                       value={member.type}
-                      onChange={(e) => handleTypeChange(index, e)}
+                      onChange={(e) => handleTypeChange(index, e.target.value)}
                     >
                       <Option value="admin">Admin</Option>
                       <Option value="coAdmin">Co-Admin</Option>
                       <Option value="member">Member</Option>
                     </Select>
                     <button
+                      type="button"
                       onClick={() => handleRemoveMember(index)}
                       className="text-red-500"
                     >

@@ -30,18 +30,16 @@ export const useRegisterUserMutation = () => {
 };
 
 export const useCreateProjectMutation = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: ({ name, _id, description, membersData }) => {
-      console.log("membersData insde useCreateProjectMutation", {
-        name,
-        _id,
-        description,
-        membersData,
-      });
-      createProject({ name, _id, description, membersData });
-    },
+    mutationFn: createProject,
     onSuccess: (data) => {
-      console.log("data", data);
+      console.log(
+        "useCreateProjectMutation successful, invalidating query...",
+        data
+      );
+      queryClient.invalidateQueries(["GetProjectsQuery"]);
     },
     onError: (error) => {
       console.log("onError", error.response.data);

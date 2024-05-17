@@ -52,13 +52,21 @@ export const createProject = async ({
   }
 };
 export const getProjects = async () => {
-  console.log("getProjectsAPI");
   try {
     const response = await axios.get("http://localhost:9000/project/all");
-    console.log("response.data", response.data);
     return response.data;
   } catch (error) {
     console.log("getProjectsAPI error", error);
+    throw error.response.data;
+  }
+};
+export const getProject = async (id) => {
+  try {
+    const response = await axios.get(`http://localhost:9000/project/${id}`);
+    console.log("response.data", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("getProjectAPI error", error);
     throw error.response.data;
   }
 };
@@ -93,6 +101,18 @@ export const addCoAdmin = async ({ projectId, coAdmin }) => {
     return response.data;
   } catch (error) {
     console.log("addCoAdminAPI error", error);
+    throw error.response.data;
+  }
+};
+
+export const getTasks = async (projectId) => {
+  console.log("getTasksAPI", projectId);
+  try {
+    const response = await axios.get(`http://localhost:9000/task/${projectId}`);
+    console.log("response", response);
+    return response.data;
+  } catch (error) {
+    console.log("getTasksAPI error", error);
     throw error.response.data;
   }
 };

@@ -24,9 +24,6 @@ router.post("/add", async (req, res) => {
       return map;
     }, {});
 
-    console.log("existingUsers", existingUsers);
-    console.log("emailToIdMap", emailToIdMap);
-
     const missingEmails = memberEmails.filter((email) => !emailToIdMap[email]);
 
     if (missingEmails.length > 0) {

@@ -30,9 +30,14 @@ router.post("/add", async (req, res) => {
     const task = new Task({
       title,
       description,
-      dueDate,
       status,
+      priority,
+      projectId,
       assignedTo,
+      dueDate,
+      labels,
+      subItems,
+      progress,
     });
 
     await task.save();
@@ -51,9 +56,11 @@ router.get("/all", async (req, res) => {
   }
 });
 
-router.get("/get/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const task = await Task.findById(req.params.id);
+    const task = await Task.find({ projectId: req.params.id });
+    if (!task) return res.status(404).send("Task not found.");
+    console.log(task);
     res.status(200).send(task);
   } catch (error) {
     res.status(400).send(error.message);
