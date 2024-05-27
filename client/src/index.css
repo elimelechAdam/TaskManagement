@@ -6,3 +6,9 @@
 * {
   font-family: "Poppins", sans-serif;
 }
+
+@layer components {
+  .btn {
+    @apply border border-gray-600 text-black bg-inherit text-sm p-3 focus:outline-none;
+  }
+}

@@ -4,8 +4,8 @@ import Task from "./Task";
 
 const TaskTable = ({ tasks }) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white">
+    <div className="overflow-x-auto ">
+      <table className="min-w-full bg-white ">
         <thead>
           <tr>
             <th className="px-4 py-2">Task</th>

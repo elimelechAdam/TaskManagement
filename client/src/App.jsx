@@ -8,7 +8,6 @@ import { Toaster, toast } from "sonner";
 import { Content } from "./components/Content";
 import { Settings } from "./_root/pages/Settings";
 import { Project } from "./_root/pages/Project";
-import { Tasks } from "./_root/pages/Tasks";
 
 function App() {
   return (
@@ -25,7 +24,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/content" element={<Content />} />
-            <Route path="/project/:id" element={<Tasks />} />
+            <Route path="/project/:id" element={<Project />} />
           </Route>
         </Routes>
       </div>
@@ -34,27 +33,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <div className="flex bg-[#dce0e8] h-screen p-4">
-      <div className="flex flex-col w-64 bg-[#f4f5f6] rounded-l-3xl overflow-hidden">
-        <Routes>
-          <Route path="/" element={<Sidebar />} />
-          <Route path="/login" element={<Login />} />
-          {/* Add more Route components as needed for other paths }
-        </Routes>
-      </div>
-      <div className="flex-1 bg-[#f4f5f6] rounded-r-3xl overflow-hidden">
-        <Routes>
-          <Route element={<AuthLayout />}>
-            <Route index element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Route>
-
-          <Route element={<RootLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
-        </Routes>
-      </div>
-    </div> */
-}
